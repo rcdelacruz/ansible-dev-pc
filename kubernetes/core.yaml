@@ -126,11 +126,6 @@
         name: k9s
       when: is_mac
 
-    - name: Add Kubeval homebrew tap
-      homebrew_tap:
-        name: instrumenta/instrumenta
-      when: is_mac
-
     - name: Install Kubeval (macOS)
       homebrew:
         name: kubeval

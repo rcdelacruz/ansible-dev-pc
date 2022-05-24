@@ -70,7 +70,7 @@
 
     # macOS
 
-    - name: Install Google Backup and Sync (macOS)
+    - name: Install Google Drive (macOS)
       homebrew_cask:
-        name: google-backup-and-sync
+        name: google-drive
       when: is_mac
