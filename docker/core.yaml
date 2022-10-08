@@ -59,7 +59,10 @@
         name: "{{ user }}"
         append: yes
         groups: docker
-      become: true
+      become: yes
+   
+    - name: Reset connection so docker group is picked up.
+      meta: reset_connection
       
     - name: Determine Docker Machine latest version
       shell:
