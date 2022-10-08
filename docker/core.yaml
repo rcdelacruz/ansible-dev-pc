@@ -54,6 +54,11 @@
         - docker-ce
         - docker-ce-cli
 
+    - name: Create "docker" group
+      group:
+        name: "docker"
+        state: present
+        
     - name: Enable Docker engine for current user
       user:
         name: "{{ user }}"
