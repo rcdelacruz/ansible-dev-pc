@@ -55,12 +55,12 @@
         - docker-ce-cli
 
     - name: Enable Docker engine for current user
-      become: yes
       user:
-        name={{ remote_user }}
-        groups=docker
-        append=yes
-
+        name: "{{ user }}"
+        append: yes
+        groups: docker
+      become: true
+      
     - name: Determine Docker Machine latest version
       shell:
         cmd: "curl -s https://api.github.com/repos/docker/machine/releases/latest | grep \"browser_download_url.*Linux-x86_64\\\"\" | cut -d : -f 2,3 | tr -d \\\""
