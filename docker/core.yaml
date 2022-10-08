@@ -62,9 +62,9 @@
         
     - name: Enable Docker engine for current user
       user:
-        name: "{{ user }}"
-        append: yes
-        groups: docker
+        name={{ lookup('env', "USER") }}
+        groups=docker
+        append=yes
       become: yes
    
     - name: Reset connection so docker group is picked up.
