@@ -55,11 +55,11 @@
         - docker-ce-cli
 
     - name: Enable Docker engine for current user
-      become: yes
+      become: true
       user:
-        name={{ remote_user }}
-        groups=docker
-        append=yes
+        name: {{ remote_user }}
+        groups: docker
+        append: yes
 
     - name: Determine Docker Machine latest version
       shell:
