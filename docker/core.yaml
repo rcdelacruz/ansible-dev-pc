@@ -23,7 +23,7 @@
         dest: /usr/local/bin/docker-compose
         mode: 0755
 
-     - name: Add Docker APT package key
+    - name: Add Docker APT package key
       become: yes
       get_url:
         url: https://download.docker.com/linux/{{ distribution | lower }}/gpg
