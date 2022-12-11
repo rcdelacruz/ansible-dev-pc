@@ -29,20 +29,20 @@
         url: https://download.docker.com/linux/ubuntu/gpg
         state: present
 
-    - name: Add Docker Repository
+    - name: Add Docker APT package key
+      become: yes
+      get_url:
+        url: https://download.docker.com/linux/{{ distribution | lower }}/gpg
+        dest: /etc/apt/keyrings/docker.asc
+        mode: 0644
+
+    - name: Add Docker APT package repository
       become: yes
       apt_repository:
-        repo: deb https://download.docker.com/linux/ubuntu focal stable
-        state: present
-
-    - name: Update APT package list
-      become: yes
-      apt:
-        update_cache: yes
-      when: apt_repository_docker.changed
-      register: apt_update
-      retries: 5
-      until: apt_update is success
+        repo: deb [arch=amd64, signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/{{ distribution | lower }} {{ ansible_distribution_release }} stable
+        filename: docker
+        update_cache: no
+      register: apt_repository_docker
 
     - name: Install Docker engine
       become: yes
