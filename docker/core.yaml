@@ -23,17 +23,20 @@
         dest: /usr/local/bin/docker-compose
         mode: 0755
 
-    - name: Add Docker GPG apt Key
+     - name: Add Docker APT package key
       become: yes
-      apt_key:
-        url: https://download.docker.com/linux/ubuntu/gpg
-        state: present
-    
-    - name: Add Docker Repository
+      get_url:
+        url: https://download.docker.com/linux/{{ distribution | lower }}/gpg
+        dest: /etc/apt/keyrings/docker.asc
+        mode: 0644
+
+    - name: Add Docker APT package repository
       become: yes
       apt_repository:
-        repo: deb https://download.docker.com/linux/ubuntu {{ distribution | lower }} stable
-        state: present
+        repo: deb [arch=amd64, signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/{{ distribution | lower }} {{ ansible_distribution_release }} stable
+        filename: docker
+        update_cache: no
+      register: apt_repository_docker
 
     - name: Install Docker engine
       become: yes
